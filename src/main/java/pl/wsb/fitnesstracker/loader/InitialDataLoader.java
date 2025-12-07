@@ -44,14 +44,6 @@ class InitialDataLoader {
 
         log.info("Loading initial data to the database");
 
-        List<User> sampleUserList = generateSampleUsers();
-        User mikolaj = new User();
-        mikolaj.setFirstName("Mikołaj");
-        mikolaj.setLastName("Święty");
-        mikolaj.setAge(null); // umożliwia "do zweryfikowania"
-        mikolaj.setEmail("mikolaj.swiety@example.com");
-
-        sampleUserList.add(mikolaj);
         List<Training> sampleTrainingList = generateTrainingData(sampleUserList);
 
 
