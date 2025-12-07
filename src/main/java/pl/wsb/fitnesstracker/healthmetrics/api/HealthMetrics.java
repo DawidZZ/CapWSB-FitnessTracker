@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import pl.wsb.fitnesstracker.user.api.User;
 
+import java.util.Date;
+
 @Entity
 @Getter
 @Setter
@@ -27,5 +29,6 @@ public class HealthMetrics {
     @Column(name = "heart_rate")
     private Integer heartRate;
 
-
+    @Column
+    private Date date;
 }
