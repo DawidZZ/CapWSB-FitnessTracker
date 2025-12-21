@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.wsb.fitnesstracker.user.api.User;
 
 import pl.wsb.fitnesstracker.user.api.UserDto;
+import pl.wsb.fitnesstracker.user.api.UserSummaryDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,5 +53,13 @@ class UserController {
         User user = userMapper.toEntity(userDto);
         return userMapper.toDto(userService.createUser(user));
     }
-
+    @GetMapping("/summary")
+    public List<UserSummaryDto> getUsersSummary() {
+        return userService.findAllUsers().stream()
+                .map(u -> new UserSummaryDto(
+                        u.getId(),
+                        u.getFirstName() + " " + u.getLastName()
+                ))
+                .toList();
+    }
 }
