@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.wsb.fitnesstracker.user.api.User;
 
 import pl.wsb.fitnesstracker.user.api.UserDto;
+import pl.wsb.fitnesstracker.user.api.UserIdEmailDto;
 import pl.wsb.fitnesstracker.user.api.UserSummaryDto;
 
 import java.util.List;
@@ -62,4 +63,13 @@ class UserController {
                 ))
                 .toList();
     }
+    @GetMapping("/search-by-email")
+    public List<UserIdEmailDto> searchByEmailFragment(@RequestParam String fragment) {
+        return userService.findAllUsers().stream()
+                .filter(u -> u.getEmail() != null)
+                .filter(u -> u.getEmail().toLowerCase().contains(fragment.toLowerCase()))
+                .map(u -> new UserIdEmailDto(u.getId(), u.getEmail()))
+                .toList();
+    }
+
 }
