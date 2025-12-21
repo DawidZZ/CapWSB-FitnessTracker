@@ -37,7 +37,7 @@ class UserController {
                 .toList();
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public UserDto getUserById(@PathVariable Long id) {
         return userService.getUser(id)
                 .map(userMapper::toDto)
