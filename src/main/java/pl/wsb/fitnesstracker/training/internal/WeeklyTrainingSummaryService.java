@@ -2,6 +2,7 @@ package pl.wsb.fitnesstracker.training.internal;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.wsb.fitnesstracker.mail.internal.MailService;
 import pl.wsb.fitnesstracker.training.api.TrainingRepository;
 import pl.wsb.fitnesstracker.user.api.User;
 import pl.wsb.fitnesstracker.user.internal.UserRepository;
@@ -17,6 +18,25 @@ public class WeeklyTrainingSummaryService {
 
     private final TrainingRepository trainingRepository;
     private final UserRepository userRepository;
+    private final MailService emailService;
+
+    private String buildMessageBody(String firstName, long trainingsCount) {
+        return """
+            Cześć %s,
+
+            Twoje tygodniowe podsumowanie treningów jest gotowe.
+
+            📊 Podsumowanie:
+            - Liczba zarejestrowanych treningów: %d
+
+            Gratulujemy konsekwencji i zachęcamy do dalszej aktywności 💪
+
+            ---
+            FitnessTracker
+            (wiadomość wygenerowana automatycznie)
+            """.formatted(firstName, trainingsCount);
+    }
+
 
     private record Acc(long count, double distanceSum, double speedSum) {}
 
@@ -55,6 +75,12 @@ public class WeeklyTrainingSummaryService {
                     a.count(),
                     a.distanceSum(),
                     avgSpeed
+            );
+
+            emailService.send(
+                    u.getEmail(),
+                    "Twój raport",
+                    buildMessageBody(u.getFirstName(), a.count())
             );
         }
 

@@ -21,7 +21,7 @@ public class WeeklyTrainingSummaryJob  {
 
     // co poniedziałek 06:00
 //    @Scheduled(cron = "0 0 6 * * MON", zone = "Europe/Warsaw")
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 20000)
     public void run() {
         final ZoneId ZONE = ZoneId.of("Europe/Warsaw");
 
